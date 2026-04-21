@@ -66,12 +66,28 @@ Open Claude Code in **any Nash project** and run:
 /nash-govern "Sheet vs Dialog for editing order details"
 ```
 
+**"That was wrong, remember for next time"**
+```
+/nash-reflect "Use Sheet not Dialog for editing in Nash"
+```
+
+**"End of session — what did we learn?"**
+```
+/nash-retro
+```
+
+**"Update skills with accumulated learnings"**
+```
+/nash-consolidate
+```
+
 ## How It Works
 
 Each skill = one `SKILL.md` file. Skills produce artifacts in `specs/<NNN>-<feature-name>/` in your current project.
 
-## The Pipeline (10 skills)
+## The Pipelines (14 skills)
 
+### Design Pipeline
 ```
 Phase 1: Discovery              Phase 2: Execution           Governance
 ─────────────────────           ──────────────────           ──────────
@@ -85,6 +101,24 @@ Phase 1: Discovery              Phase 2: Execution           Governance
     ↓
 ── APPROVAL GATE ──────────────────→
 ```
+
+### Improvement Pipeline
+```
+During session              End of session           Periodic
+────────────────            ──────────────           ────────
+/nash-reflect               /nash-retro              /nash-consolidate
+    │                           │                        │
+    ▼                           ▼                        ▼
+skill/learnings.md ◄──── improve/retros/ ────► Promote to SKILL.md
+                          improve/learnings/        consolidated.md
+```
+
+The improvement pipeline is a **learning flywheel**:
+1. **Reflect** — Capture insights as they happen (corrections, patterns, preferences)
+2. **Retro** — Analyze a session for what worked and what didn't
+3. **Consolidate** — Promote validated learnings into skill instructions
+
+Each skill accumulates a `learnings.md` file. After 3+ validated entries on the same topic, `/nash-consolidate` promotes the pattern into the skill's SKILL.md — so the skill literally gets smarter over time.
 
 ## Artifact Structure
 
@@ -291,18 +325,36 @@ What it does:
 ```
 nash-skills/
 ├── README.md
-└── skills/
-    ├── nash-pipeline/SKILL.md    # Orchestrator — single entry point
-    ├── nash-ingest/SKILL.md      # Phase 1: Digest raw input
-    ├── nash-locate/SKILL.md      # Phase 1: Map to Nash architecture
-    ├── nash-clarify/SKILL.md     # Phase 1: Generate questions
-    ├── nash-propose/SKILL.md     # Phase 1: Design proposals
-    ├── nash-spec/SKILL.md        # Phase 2: Implementation spec
-    ├── nash-tasks/SKILL.md       # Phase 2: Task breakdown
-    ├── nash-prototype/SKILL.md   # Phase 2: Working prototype
-    ├── nash-govern/SKILL.md      # Governance: Design system rules
-    ├── nash-audit/SKILL.md       # Governance: Compliance audit
-    └── nash-sync/SKILL.md        # Governance: Figma-code sync
+├── skills/
+│   ├── nash-pipeline/SKILL.md    # Orchestrator — single entry point
+│   │
+│   │  ── Design Pipeline ──
+│   ├── nash-ingest/SKILL.md      # Phase 1: Digest raw input
+│   ├── nash-locate/SKILL.md      # Phase 1: Map to Nash architecture
+│   ├── nash-clarify/SKILL.md     # Phase 1: Generate questions
+│   ├── nash-propose/SKILL.md     # Phase 1: Design proposals
+│   ├── nash-spec/SKILL.md        # Phase 2: Implementation spec
+│   ├── nash-tasks/SKILL.md       # Phase 2: Task breakdown
+│   ├── nash-prototype/SKILL.md   # Phase 2: Working prototype
+│   │
+│   │  ── Governance ──
+│   ├── nash-govern/SKILL.md      # Design system rules & decisions
+│   ├── nash-audit/SKILL.md       # Compliance audit
+│   ├── nash-sync/SKILL.md        # Figma-code sync
+│   │
+│   │  ── Improvement Pipeline ──
+│   ├── nash-reflect/SKILL.md     # Quick mid-session learning capture
+│   ├── nash-retro/SKILL.md       # Session retrospective analysis
+│   └── nash-consolidate/SKILL.md # Promote learnings into skills
+│
+└── improve/
+    ├── learnings/
+    │   ├── INDEX.md               # Chronological log of all learnings
+    │   ├── consolidated.md        # "Nash Design Bible" — promoted knowledge
+    │   ├── nash-patterns.md       # General Nash patterns
+    │   ├── design-system.md       # Design system do's and don'ts
+    │   └── component-selections.md # Component choice examples
+    └── retros/                    # Session retrospective files
 ```
 
 ## Requirements
