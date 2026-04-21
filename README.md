@@ -1,14 +1,74 @@
 # Nash Design Pipeline Skills
 
-## Context
+Claude Code skills for Product Designers and Design Engineers at Nash. Takes raw feature requests from any source and transforms them into structured specs, design proposals, and implementation plans — all Nash-specific.
 
-As Nash's product designer, you receive feature requests from many sources (Slack, Linear, Figma, meetings, your own research) and struggle to quickly understand what exactly needs to be built, where it lives in the system, and how to scope it. This pipeline of Claude Code skills creates a structured workflow — inspired by BB-Skills — that transforms raw input into clear specs, design proposals, and implementation plans, all Nash-specific.
+Inspired by [BB-Skills](https://github.com/buildbetter-app/BB-Skills).
 
-## Installation
+## Quick Start
 
-**Location**: `~/.claude/skills/` (global, available across all Nash projects)
+### Install
 
-Each skill = one `SKILL.md` file with YAML frontmatter + prompt body.
+Copy the skills to your global Claude Code skills directory:
+
+```bash
+# Clone the repo
+git clone https://github.com/magic-nash/nash-skills.git
+
+# Copy all skills to global Claude Code skills directory
+cp -r nash-skills/skills/nash-* ~/.claude/skills/
+```
+
+### Use
+
+Open Claude Code in **any Nash project** and run:
+
+```
+# Full pipeline — asks what you need, then runs step by step
+/nash-pipeline
+
+# Or run individual skills directly
+/nash-ingest <paste your feature request here>
+/nash-locate
+/nash-clarify
+/nash-propose
+```
+
+### Typical Workflows
+
+**"Someone just asked me to build something and I need to understand it"**
+```
+/nash-pipeline → select "Full discovery"
+→ paste the Slack message / transcript / PRD
+→ get: structured intake, codebase mapping, questions, design proposals
+```
+
+**"I just need to know where this lives in Nash"**
+```
+/nash-pipeline → select "Quick scope"
+→ paste the feature request
+→ get: which app, module, screens, components are involved
+```
+
+**"I have an approved design and need to plan implementation"**
+```
+/nash-spec
+/nash-tasks
+/nash-prototype
+```
+
+**"Is this code following our design system?"**
+```
+/nash-audit features/Orders/
+```
+
+**"Should I use Sheet or Dialog here?"**
+```
+/nash-govern "Sheet vs Dialog for editing order details"
+```
+
+## How It Works
+
+Each skill = one `SKILL.md` file. Skills produce artifacts in `specs/<NNN>-<feature-name>/` in your current project.
 
 ## The Pipeline (10 skills)
 
@@ -226,33 +286,28 @@ What it does:
 
 ---
 
-## Files to Create
+## Repository Structure
 
-| # | File | Path |
-|---|------|------|
-| 1 | nash-ingest | `~/.claude/skills/nash-ingest/SKILL.md` |
-| 2 | nash-locate | `~/.claude/skills/nash-locate/SKILL.md` |
-| 3 | nash-clarify | `~/.claude/skills/nash-clarify/SKILL.md` |
-| 4 | nash-propose | `~/.claude/skills/nash-propose/SKILL.md` |
-| 5 | nash-spec | `~/.claude/skills/nash-spec/SKILL.md` |
-| 6 | nash-tasks | `~/.claude/skills/nash-tasks/SKILL.md` |
-| 7 | nash-prototype | `~/.claude/skills/nash-prototype/SKILL.md` |
-| 8 | nash-govern | `~/.claude/skills/nash-govern/SKILL.md` |
-| 9 | nash-audit | `~/.claude/skills/nash-audit/SKILL.md` |
-| 10 | nash-sync | `~/.claude/skills/nash-sync/SKILL.md` |
+```
+nash-skills/
+├── README.md
+└── skills/
+    ├── nash-pipeline/SKILL.md    # Orchestrator — single entry point
+    ├── nash-ingest/SKILL.md      # Phase 1: Digest raw input
+    ├── nash-locate/SKILL.md      # Phase 1: Map to Nash architecture
+    ├── nash-clarify/SKILL.md     # Phase 1: Generate questions
+    ├── nash-propose/SKILL.md     # Phase 1: Design proposals
+    ├── nash-spec/SKILL.md        # Phase 2: Implementation spec
+    ├── nash-tasks/SKILL.md       # Phase 2: Task breakdown
+    ├── nash-prototype/SKILL.md   # Phase 2: Working prototype
+    ├── nash-govern/SKILL.md      # Governance: Design system rules
+    ├── nash-audit/SKILL.md       # Governance: Compliance audit
+    └── nash-sync/SKILL.md        # Governance: Figma-code sync
+```
 
-## Implementation Order
+## Requirements
 
-1. **Phase 1 foundation** (immediate value): `nash-ingest`, `nash-locate`, `nash-govern`
-2. **Phase 1 completion**: `nash-clarify`, `nash-propose`
-3. **Phase 2**: `nash-spec`, `nash-tasks`, `nash-prototype`
-4. **Maintenance**: `nash-audit`, `nash-sync`
-
-## Verification
-
-After creating each skill:
-1. Run `/nash-ingest` with a real feature request to test intake parsing
-2. Run `/nash-locate` on the output to verify it finds correct Nash modules
-3. Run the full Phase 1 pipeline on a known feature to validate end-to-end
-4. Test `/nash-govern` standalone to verify it produces a useful governance doc
-5. Test `/nash-audit` on an existing Nash component directory
+- [Claude Code](https://claude.ai/claude-code) CLI or Desktop app
+- For Linear integration: Linear MCP server configured
+- For Figma sync: Figma Developer MCP configured
+- Best results when run inside a Nash monorepo (nash-ui / pro-008-nash)
