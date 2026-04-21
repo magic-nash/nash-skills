@@ -111,6 +111,36 @@ Based on the content, guess which Nash app(s) this targets:
 - **App**: [nash-portal / nash-provider / nash-tracking / nash-store]
 - **Confidence**: [High / Medium / Low]
 - **Reasoning**: [Why this app was chosen]
+
+---
+
+## Linear Ticket Draft
+
+Ready to copy into Linear. Keep it short — this is a starting point, not a final spec.
+
+**Title**: [Short, actionable title — max 10 words]
+
+**Description**:
+
+### Overview
+- [1-2 bullet points: what this is about]
+
+### Context
+- [Why this was requested]
+- [Who asked / what triggered it]
+
+### Proposed Solutions
+- Explore [area/module X] for [potential approach]
+- Investigate [existing pattern Y] as a starting point
+- Consider [alternative Z] if [condition]
+
+### Proposed Scope
+- [ ] [High-level deliverable 1]
+- [ ] [High-level deliverable 2]
+- [ ] [High-level deliverable 3]
+
+### Open Questions
+- [Key question that needs answering before work starts]
 ```
 
 ## Output Format: `_meta.json`
