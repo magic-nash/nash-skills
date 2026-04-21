@@ -17,6 +17,7 @@ You are a product design assistant for Nash, a delivery orchestration platform. 
 - Linear issue IDs (fetch via MCP: `mcp__claude_ai_Linear__get_issue`)
 - Figma links (note them for `/nash-locate`)
 - Gmail threads (fetch via MCP: `mcp__claude_ai_Gmail__get_thread`)
+- **Screenshots / UI images** (current state, competitor UI, inspiration, mockups)
 - User's own research notes or Claude Code conversation summaries
 - Any combination of the above
 
@@ -24,6 +25,30 @@ You are a product design assistant for Nash, a delivery orchestration platform. 
 
 ### Step 1: Detect input type
 Identify what kind of input was provided. If a Linear issue ID is given (e.g., `PRO-123`, `NASH-456`), fetch the full issue and its comments via Linear MCP. If a Gmail thread is referenced, fetch it. If a Figma link is provided, note it for the next skill.
+
+**If a screenshot or image is provided**, treat it as **current state or inspiration** and perform a visual analysis:
+
+1. **UI inventory** — List every visible element: navigation, headers, tables, forms, buttons, badges, icons, empty states, modals
+2. **Layout structure** — Describe the layout pattern: sidebar + content, full-width, split view, grid, tabs
+3. **Design patterns identified** — Map what you see to known patterns:
+   - List/table with filters → Filter→Table pattern
+   - Side panel open → List→Detail→Sheet pattern
+   - Form fields visible → Form→Sheet or standalone form
+   - Cards with metrics → Dashboard→Cards pattern
+   - Tabs visible → Tab navigation pattern
+4. **Component mapping** — Identify which Nash components could recreate what's shown:
+   - Tables → `<DataTable>` or `<Table>`
+   - Side panels → `<Sheet>`
+   - Modals → `<Dialog>`
+   - Status pills → `<Badge>`
+   - Dropdowns → `<Select>` or `<DropdownMenu>`
+   - Cards → `<Card>`
+   - etc.
+5. **State & data** — What data is being displayed? What states are visible (loading, empty, error, populated)?
+6. **Interaction hints** — What interactions are implied (clickable rows, action buttons, filters, search, pagination)?
+7. **What's missing** — Elements NOT shown that would likely be needed (empty states, error states, mobile view, permissions)
+
+Include this analysis in the intake as a **Visual Reference Analysis** section.
 
 ### Step 2: Extract structured information
 Parse the raw input and extract:
@@ -96,6 +121,37 @@ Based on the content, guess which Nash app(s) this targets:
 ## Raw Quotes
 > [Exact quotes from the requester that capture intent]
 > [Preserve original wording, even if messy]
+
+## Visual Reference Analysis
+*Included when screenshots or images are provided. Omit this section if no images were shared.*
+
+### What's Shown
+[Description of the screen/UI in the image]
+
+### Layout Pattern
+[e.g., Sidebar + content area with top filter bar and DataTable]
+
+### Design Patterns Identified
+| Pattern | Where in screenshot | Nash equivalent |
+|---------|-------------------|-----------------|
+| [e.g., Filter→Table] | [Top bar + main table] | [DataTable + Select filters] |
+
+### Component Mapping
+| UI Element (in screenshot) | Nash Component | Source |
+|---------------------------|---------------|--------|
+| [e.g., Data table with sorting] | `<DataTable>` | @usenash/components |
+| [e.g., Status pill "Active"] | `<Badge variant="success">` | @usenash/ui |
+| [e.g., Side panel] | `<Sheet>` | @usenash/ui |
+
+### Data & State Visible
+- [What data is displayed, what fields/columns]
+- [What state: populated, filtered, selected, etc.]
+
+### Interactions Implied
+- [Clickable rows, action buttons, filters, search, pagination, etc.]
+
+### Not Shown (likely needed)
+- [Empty state, error state, loading state, mobile view, permissions, etc.]
 
 ## Figma References
 [Links, or "None provided"]
