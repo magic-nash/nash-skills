@@ -1,6 +1,6 @@
 # Nash Skills
 
-A collection of [Claude Code](https://claude.ai/claude-code) skills for Product Designers and Design Engineers at Nash. Transforms raw feature requests from any source into structured specs, design proposals, and implementation plans — and gets smarter over time.
+A collection of [Claude Code](https://claude.ai/claude-code) skills for Product Designers, Product Mangers and Design Engineers at Nash. Transforms raw feature requests from any source into structured specs, design proposals, and implementation plans — and gets smarter over time.
 
 
 ---
