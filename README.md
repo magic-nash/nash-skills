@@ -7,7 +7,7 @@ A collection of [Claude Code](https://claude.ai/claude-code) skills for Product 
 
 ## What It Does
 
-You're a product designer. People ask you to build things via Slack, Linear, meetings, Figma comments, PRDs. The challenge: understanding what exactly needs to be built, where it lives in Nash, and how to scope it.
+You're a Product Designer & Product Manager. People ask you to build things via Slack, Linear, meetings, Figma comments, PRDs. The challenge: understanding what exactly needs to be built, where it lives in Nash, and how to scope it.
 
 Nash Skills solves this with **14 slash commands** organized into 3 pipelines:
 
