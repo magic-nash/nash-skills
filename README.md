@@ -9,7 +9,7 @@ A collection of [Claude Code](https://claude.ai/claude-code) skills for Product 
 
 You're a Product Designer & Product Manager. People ask you to build things via Slack, Linear, meetings, Figma comments, PRDs. The challenge: understanding what exactly needs to be built, where it lives in Nash, and how to scope it.
 
-Nash Skills solves this with **14 slash commands** organized into 3 pipelines:
+Nash Skills solves this with **15 slash commands** organized into 3 pipelines plus a standalone PRD synthesizer:
 
 ### Design Pipeline — From idea to prototype
 
@@ -42,11 +42,17 @@ Nash Skills solves this with **14 slash commands** organized into 3 pipelines:
 
 Plus **`/nash-pipeline`** — a single entry point that asks what you need and runs the selected steps sequentially.
 
+### Standalone — PRD synthesis
+
+| Skill | What it does |
+|-------|-------------|
+| `/nash-to-prd` | Synthesizes pasted conversations, notes, screenshots, Linear issues, Gmail threads, and Figma links into a stakeholder-ready Product Requirements Document. Independent of the design pipeline — no `specs/` artifacts required. |
+
 ---
 
 ## What's Inside
 
-### 14 Skills
+### 15 Skills
 
 Each skill is a `SKILL.md` file with YAML frontmatter and detailed prompt instructions. They're Nash-specific — they know about the apps, modules, components, design tokens, and architecture patterns.
 
@@ -71,7 +77,10 @@ skills/
 │  Improvement
 ├── nash-reflect/SKILL.md       # Quick mid-session learning capture
 ├── nash-retro/SKILL.md         # Session retrospective
-└── nash-consolidate/SKILL.md   # Promote learnings into skills
+├── nash-consolidate/SKILL.md   # Promote learnings into skills
+│
+│  Standalone
+└── nash-to-prd/SKILL.md        # Synthesize raw materials into a PRD
 ```
 
 ### Learnings Infrastructure
@@ -221,6 +230,9 @@ Single entry point. Asks what you need with presets:
 
 Runs selected steps sequentially with progress display and approval gates.
 
+### `/nash-to-prd` — Synthesize a PRD
+Standalone skill — independent of the design pipeline. Takes whatever raw materials are available (pasted conversations, notes, screenshots, Linear issue IDs, Gmail threads, Figma links, codebase references) and synthesizes them into a stakeholder-ready Product Requirements Document. Does NOT interview the user — flags gaps as `[OPEN QUESTION: …]`. Use when you need a doc to circulate before kicking off the full pipeline, or to retroactively document a shipped feature.
+
 ---
 
 ## Getting Started
@@ -246,7 +258,7 @@ Skills auto-load in every new Claude Code session. No registration needed.
 
 ### Verify
 
-Open Claude Code and type `/nash-` — you should see all 14 skills in the autocomplete menu.
+Open Claude Code and type `/nash-` — you should see all 15 skills in the autocomplete menu.
 
 ### Your First Run
 
