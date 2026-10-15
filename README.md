@@ -19,7 +19,7 @@ Nash Skills solves this with **15 slash commands** organized into 3 pipelines pl
 | 2 | `/nash-locate` | Architecture map — which app, module, screens, components, user flows, edge cases |
 | 3 | `/nash-clarify` | Qualifying questions ranked by priority, organized by audience (PM, Eng, Design) |
 | 4 | `/nash-research` | Product-side research of similar apps — user portrait, needs, goals, cross-product insights + interactive HTML report |
-| 5 | `/nash-design-research` | Mobbin pattern research — screens/flows with Adopt/Adapt/Avoid verdicts + scrollable HTML screen gallery |
+| 5 | `/nash-design-research` | Mobbin pattern research — screens, flows AND interaction-level micro-patterns with Adopt/Adapt/Avoid verdicts + compact interactive HTML gallery (thumbnails → lightbox) |
 | 6 | `/nash-propose` | 2-3 design proposals with ASCII wireframes and Nash component bills of materials |
 | | | **--- approval gate ---** |
 | 7 | `/nash-spec` | Implementation spec — file tree, component APIs, GraphQL, Zod schemas, routes |
@@ -203,7 +203,7 @@ Max 10 questions organized by audience (PM, Engineering, Design Lead). Each incl
 Searches the web (Parallel Search MCP / WebSearch) for products solving the same job, in-domain and in analogous industries. Produces: user portrait (JTBD), reference products with transfers/doesn't-transfer analysis, cross-product insights, recommended direction. Outputs `02a-product-research.md` + a self-contained interactive HTML report with ASCII wireframe proposals per Nash app type.
 
 ### `/nash-design-research` — Mobbin pattern research
-Generates 4-8 search phrases (literal, pattern-level, analogous domains) and searches Mobbin flows/screens/sections, platform-aware (web for portal/provider/store, ios for driver). Groups hits into named patterns with Adopt/Adapt/Avoid verdicts mapped to Nash conventions. Outputs `02b-design-research.md` + an interactive HTML report with downloaded screen galleries (scroll-snap, lightbox) and ASCII wireframe proposals.
+Generates 5-10 search phrases from four angles (literal, pattern-level, analogous domains, interaction-level micro-patterns) and searches Mobbin flows/screens/sections, platform-aware (web for portal/provider/store, ios for driver). Targets a mix of screen-level and interaction/component-level findings. Groups hits into named patterns with Adopt/Adapt/Avoid verdicts mapped to Nash conventions. Outputs `02b-design-research.md` + a minimal interactive HTML report: compact thumbnail strips with lightbox (arrow-key navigation), verdict filter chips, and collapsible ASCII wireframe proposals.
 
 ### `/nash-propose` — Design proposals
 2-3 proposals at MVP/Standard/Full scope. Each has: ASCII wireframe, component bill of materials (exact Nash components), interaction model, state management approach, design pattern reference, effort estimate. Recommends one with rationale.

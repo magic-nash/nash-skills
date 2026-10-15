@@ -26,10 +26,11 @@ Pass the platform into every Mobbin query and say in the output which scope was 
 
 ### Step 2: Generate search phrases
 
-Create **4-8 Mobbin search phrases**, from three angles:
+Create **5-10 Mobbin search phrases**, from four angles:
 1. **Literal** — the feature's own vocabulary ("order tracking", "delivery status")
 2. **Pattern-level** — the UI pattern underneath ("activity feed", "split view detail panel", "bulk actions table", "timeline", "map with list")
 3. **Analogous domains** — industries with the same shape of problem ("support ticket inbox", "trading order book", "ride hailing driver app", "incident management")
+4. **Interaction-level** — micro-patterns and components, not whole screens ("bulk select with floating action bar", "inline status change dropdown", "row hover quick actions", "escalate confirmation dialog", "filter chips with counts") — run these against `search_sections` and `search_flows`, which capture components and step-by-step interactions
 
 List the phrases in the output file so the search is reproducible.
 
@@ -37,9 +38,11 @@ List the phrases in the output file so the search is reproducible.
 
 The Mobbin MCP tools are `mcp__claude_ai_Mobbbin__search_flows`, `mcp__claude_ai_Mobbbin__search_screens`, `mcp__claude_ai_Mobbbin__search_sections` (note: "Mobbbin" with triple b). If their schemas aren't loaded, load them first via ToolSearch (`select:mcp__claude_ai_Mobbbin__search_flows,...`).
 
-- **search_flows** — for multi-step journeys (onboarding, checkout, triage→resolve)
+- **search_flows** — for multi-step journeys AND interactions (triage→resolve, inline edit, escalation) — always run at least one
 - **search_screens** — for single-surface patterns (dashboard, detail view, queue)
-- **search_sections** — for components within a screen (headers, cards, filters)
+- **search_sections** — for components within a screen (headers, cards, filters, action bars) — always run at least one for the interaction-level phrases
+
+Aim for a mix: roughly half the findings should be screen-level patterns, half interaction/component-level.
 
 Run searches for each phrase, platform-scoped. Fire independent searches in parallel. Collect: app name, screen/flow title, and the Mobbin link for each relevant hit. Discard hits that are visually pretty but structurally irrelevant.
 
@@ -61,12 +64,13 @@ Group the hits into **named patterns** (e.g. "Inbox + detail split view", "Statu
 Alongside the markdown, always produce `02b-design-research.html` (same directory, plus an `assets/` subfolder):
 
 1. **Download every referenced screen** with `curl -sL "<image_url>" -o assets/<app>-<n>.webp` — Mobbin `image_url`s expire after 30 days, so never hot-link them; embed the downloaded files with relative paths. Keep `mobbin_url` as the citation link on each image.
-2. **Self-contained single HTML file** (inline CSS/JS, no external deps, no CDN). Structure:
+2. **Self-contained single HTML file** (inline CSS/JS, no external deps, no CDN). Keep it **minimal and compact** — the report is for fast scanning, detail lives in the lightbox:
    - Sticky header: feature name, platform scope, date, verdict filter chips (**Adopt / Adapt / Avoid** — clicking filters pattern sections)
-   - One section per pattern: verdict badge, description, Nash-fit note, and a **horizontally scrollable gallery** (`overflow-x: auto`, scroll-snap) of the downloaded screens — big enough to read (min-height ~420px), click opens a lightbox (full-size image + app name + link to Mobbin), drag-to-scroll with mouse
-   - **Wireframe proposals section**: for each relevant Nash app type (portal / provider / driver mobile / tracking), an ASCII wireframe in `<pre>` (monospace, box-drawing characters, same style as `/nash-propose`) sketching how the recommended pattern could look in that app, with 2-3 annotation lines under each
+   - One section per pattern: verdict badge, **max 2 sentences** of description, one-line Nash-fit note, and a **compact thumbnail strip** — small thumbnails (~200-240px tall, `overflow-x: auto`, scroll-snap, drag-to-scroll), NOT full-width heroes; clicking a thumbnail opens the lightbox with the full-size image, caption, and Mobbin link. The lightbox is where reading happens; the strip is for scanning.
+   - In the lightbox support ←/→ arrow keys to move between all screens of the pattern
+   - **Wireframe proposals section**: for each relevant Nash app type (portal / provider / driver mobile / tracking), an ASCII wireframe in `<pre>` (monospace, box-drawing characters, same style as `/nash-propose`) with 2-3 annotation lines under each — collapsed by default behind a `<details>` toggle per wireframe
    - Footer: reference table (app / type / pattern / Mobbin link) and search phrases used
-3. Keep it elegant but lightweight: system font stack, neutral palette, dark-mode friendly (`prefers-color-scheme`). No frameworks.
+3. Styling: system font stack, neutral palette, generous whitespace, dark-mode friendly (`prefers-color-scheme`). No frameworks, no decoration that doesn't aid scanning.
 
 End with a 5-line chat summary: strongest pattern recommendation, 2-3 best Mobbin links, and the HTML file path (clickable).
 
