@@ -20,8 +20,8 @@ Before doing anything, present the user with options using AskUserQuestion:
 | Preset | Steps included | Best for |
 |--------|---------------|----------|
 | **Quick scope** | Ingest + Locate | "Where does this live in Nash?" — fast context mapping |
-| **Full discovery** | Ingest + Locate + Clarify + Propose | Full Phase 1 — understand, question, design |
-| **All in one** | All 7 steps with approval gate | Complete pipeline from idea to prototype |
+| **Full discovery** | Ingest + Locate + Clarify + Research + Design Research + Propose | Full Phase 1 — understand, question, research, design |
+| **All in one** | All 9 steps with approval gate | Complete pipeline from idea to prototype |
 | **Custom** | Pick individual steps | When you need specific steps only |
 
 If the user selects **Custom**, ask a follow-up with checkboxes:
@@ -30,6 +30,8 @@ If the user selects **Custom**, ask a follow-up with checkboxes:
 - [ ] **Ingest** — Digest the request into structured intake
 - [ ] **Locate** — Map to Nash architecture (apps, modules, components)
 - [ ] **Clarify** — Generate qualifying questions for the team
+- [ ] **Research** — Product-side research of similar apps (user, needs, goals) + HTML report
+- [ ] **Design Research** — Mobbin pattern research with screen gallery HTML report
 - [ ] **Propose** — Design proposals with wireframes
 - [ ] **Spec** — Detailed implementation specification
 - [ ] **Tasks** — Break into Linear-ready task list
@@ -78,9 +80,19 @@ For each selected step, execute the full skill logic as defined in its SKILL.md:
 - Requires `00-intake.md` and `01-location.md`
 - Creates `02-questions.md`
 
+### Research
+- Follow `/nash-research` skill fully
+- Requires `00-intake.md`
+- Creates `02a-product-research.md` + `02a-product-research.html`
+
+### Design Research
+- Follow `/nash-design-research` skill fully
+- Requires `00-intake.md`; reads `02a-product-research.md` if present
+- Creates `02b-design-research.md` + `02b-design-research.html` (+ `assets/`)
+
 ### Propose
 - Follow `/nash-propose` skill fully
-- Requires intake and location at minimum
+- Requires intake and location at minimum; uses `02a`/`02b` research guidance when present
 - Creates `03-proposals.md`
 
 ### Spec
@@ -104,12 +116,14 @@ After each step, show a progress bar:
 
 ```
 Nash Pipeline Progress:
-[■■■■□□□] 3/7
+[■■■□□□□□□] 3/9
 
-✅ Ingest     → 00-intake.md
-✅ Locate     → 01-location.md
-✅ Clarify    → 02-questions.md
-⬜ Propose    → (next)
+✅ Ingest          → 00-intake.md
+✅ Locate          → 01-location.md
+✅ Clarify         → 02-questions.md
+⬜ Research        → (next)
+⬜ Design Research
+⬜ Propose
 ⬜ Spec
 ⬜ Tasks
 ⬜ Prototype
@@ -133,10 +147,12 @@ Feature: [Name]
 Directory: specs/[NNN]-[name]/
 
 Artifacts produced:
-  00-intake.md      ✅  [1-line summary]
-  01-location.md    ✅  [1-line summary]
-  02-questions.md   ✅  [1-line summary]
-  03-proposals.md   ✅  [1-line summary]
+  00-intake.md              ✅  [1-line summary]
+  01-location.md            ✅  [1-line summary]
+  02-questions.md           ✅  [1-line summary]
+  02a-product-research.md   ✅  [1-line summary + .html report]
+  02b-design-research.md    ✅  [1-line summary + .html gallery]
+  03-proposals.md           ✅  [1-line summary]
   04-spec.md        ✅  [1-line summary]
   05-tasks.md       ✅  [N tasks, effort estimate]
   06-prototype/     ✅  [N files]

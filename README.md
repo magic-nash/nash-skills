@@ -18,11 +18,13 @@ Nash Skills solves this with **15 slash commands** organized into 3 pipelines pl
 | 1 | `/nash-ingest` | Structured intake from any raw input (Slack, transcript, PRD, Linear issue) |
 | 2 | `/nash-locate` | Architecture map — which app, module, screens, components, user flows, edge cases |
 | 3 | `/nash-clarify` | Qualifying questions ranked by priority, organized by audience (PM, Eng, Design) |
-| 4 | `/nash-propose` | 2-3 design proposals with ASCII wireframes and Nash component bills of materials |
+| 4 | `/nash-research` | Product-side research of similar apps — user portrait, needs, goals, cross-product insights + interactive HTML report |
+| 5 | `/nash-design-research` | Mobbin pattern research — screens/flows with Adopt/Adapt/Avoid verdicts + scrollable HTML screen gallery |
+| 6 | `/nash-propose` | 2-3 design proposals with ASCII wireframes and Nash component bills of materials |
 | | | **--- approval gate ---** |
-| 5 | `/nash-spec` | Implementation spec — file tree, component APIs, GraphQL, Zod schemas, routes |
-| 6 | `/nash-tasks` | Dependency-ordered task list with effort estimates, ready to copy into Linear |
-| 7 | `/nash-prototype` | Working .tsx files using real `@usenash/ui` imports, runnable in any PRO-XXX project |
+| 7 | `/nash-spec` | Implementation spec — file tree, component APIs, GraphQL, Zod schemas, routes |
+| 8 | `/nash-tasks` | Dependency-ordered task list with effort estimates, ready to copy into Linear |
+| 9 | `/nash-prototype` | Working .tsx files using real `@usenash/ui` imports, runnable in any PRO-XXX project |
 
 ### Governance Pipeline — Keep the design system consistent
 
@@ -64,6 +66,8 @@ skills/
 ├── nash-ingest/SKILL.md        # Digest raw input into structured intake
 ├── nash-locate/SKILL.md        # Map to Nash apps, modules, screens, user flows
 ├── nash-clarify/SKILL.md       # Generate qualifying questions
+├── nash-research/SKILL.md      # Product research of similar apps (+ HTML report)
+├── nash-design-research/SKILL.md # Mobbin pattern research (+ HTML gallery)
 ├── nash-propose/SKILL.md       # Design proposals with wireframes
 ├── nash-spec/SKILL.md          # Implementation specification
 ├── nash-tasks/SKILL.md         # Task breakdown for Linear
@@ -107,6 +111,8 @@ specs/001-fleet-bulk-actions/
 ├── 00-intake.md                # Structured feature request
 ├── 01-location.md              # Architecture map + user flows + edge cases
 ├── 02-questions.md             # Qualifying questions for the team
+├── 02a-product-research.md     # Product research (+ .html report)
+├── 02b-design-research.md      # Mobbin pattern research (+ .html gallery, assets/)
 ├── 03-proposals.md             # Design proposals with wireframes
 ├── 04-spec.md                  # Implementation specification
 ├── 05-tasks.md                 # Linear-ready task list
@@ -128,6 +134,8 @@ Phase 1: Discovery                    Phase 2: Execution
 /nash-locate                          /nash-tasks
     ↓                                     ↓
 /nash-clarify                         /nash-prototype
+    ↓
+/nash-research → /nash-design-research
     ↓
 /nash-propose
     ↓
@@ -190,6 +198,12 @@ Explores the actual codebase to find: target app, affected modules, existing scr
 
 ### `/nash-clarify` — Generate qualifying questions
 Max 10 questions organized by audience (PM, Engineering, Design Lead). Each includes: why it matters, suggested answer, options table. Ranked P0 (blocks everything) through P2 (nice-to-have). Flags which can be answered by reading code vs. need human input.
+
+### `/nash-research` — Product pattern research
+Searches the web (Parallel Search MCP / WebSearch) for products solving the same job, in-domain and in analogous industries. Produces: user portrait (JTBD), reference products with transfers/doesn't-transfer analysis, cross-product insights, recommended direction. Outputs `02a-product-research.md` + a self-contained interactive HTML report with ASCII wireframe proposals per Nash app type.
+
+### `/nash-design-research` — Mobbin pattern research
+Generates 4-8 search phrases (literal, pattern-level, analogous domains) and searches Mobbin flows/screens/sections, platform-aware (web for portal/provider/store, ios for driver). Groups hits into named patterns with Adopt/Adapt/Avoid verdicts mapped to Nash conventions. Outputs `02b-design-research.md` + an interactive HTML report with downloaded screen galleries (scroll-snap, lightbox) and ASCII wireframe proposals.
 
 ### `/nash-propose` — Design proposals
 2-3 proposals at MVP/Standard/Full scope. Each has: ASCII wireframe, component bill of materials (exact Nash components), interaction model, state management approach, design pattern reference, effort estimate. Recommends one with rationale.
